@@ -1,0 +1,7 @@
+project_id  = "your-gcp-project"
+region      = "europe-west2"
+bq_location = "EU"
+image_tag   = "abc1234"
+ar_repo_url = "europe-west2-docker.pkg.dev/your-gcp-project/pulsestream"
+# max_delivery_attempts      = 5
+# alert_notification_channel = "projects/your-gcp-project/notificationChannels/123456789"
