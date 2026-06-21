@@ -1,0 +1,34 @@
+[project]
+name = "pulsestream-mapper"
+version = "0.1.0"
+description = "PulseStream mapper: Pub/Sub push -> BigQuery"
+requires-python = ">=3.12"
+dependencies = [
+    "flask>=3.0.0",
+    "gunicorn>=23.0.0",
+    "google-cloud-bigquery>=3.27.0",
+    "jsonschema>=4.23.0",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.3.0",
+    "ruff>=0.7.0",
+]
+
+[tool.ruff]
+line-length = 120
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "W"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-v --tb=short"
+
+[tool.setuptools.packages.find]
+include = ["mapper*"]
+
+[tool.setuptools.package-data]
+mapper = ["event.schema.json"]
