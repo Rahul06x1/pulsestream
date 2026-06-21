@@ -130,6 +130,24 @@ python main.py   # opens SSE, publishes events; GET :8080 for /healthz + counts
 
 ---
 
+## Key decisions & what I learned
+
+- **HTTP status codes drive delivery.** The mapper returns `204`/`400`/`500` and lets
+  Pub/Sub handle ack, retry, and dead-lettering — the service stays stateless. *Lesson:*
+  model failure as response codes and let the broker do the hard part.
+- **Dead-letter + redrive over infinite retries.** Poison messages are bounded, then
+  quarantined to BigQuery so nothing is silently lost. *Lesson:* always give bad messages
+  somewhere to go.
+- **`cpu_idle = false` for the background consumer** (a bug I caught): Cloud Run throttles
+  CPU between requests, which would stall the adapter's long-lived SSE thread. *Learned:*
+  the Cloud Run execution/billing model the hard way — background workers need CPU always
+  allocated.
+- **A shared contract with a drift test.** One JSON Schema is used by adapter and mapper,
+  and a contract test fails CI if the bundled copy diverges. *Lesson:* contracts rot
+  without enforcement.
+- **Three small single-purpose services** (adapter/mapper/redrive) over one process —
+  independent scaling and deploys. *Tradeoff:* more boilerplate for clearer boundaries.
+
 ## Skills demonstrated
 
 Event-driven architecture · Pub/Sub (push subscriptions, dead-letter queues, retry
