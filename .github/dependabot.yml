@@ -1,0 +1,19 @@
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: weekly
+
+  - package-ecosystem: pip
+    directory: "/adapter"
+    schedule:
+      interval: weekly
+  - package-ecosystem: pip
+    directory: "/mapper"
+    schedule:
+      interval: weekly
+  - package-ecosystem: pip
+    directory: "/redrive"
+    schedule:
+      interval: weekly
