@@ -24,6 +24,10 @@ resource "google_cloud_run_v2_service" "adapter" {
       }
       resources {
         limits = { cpu = "1", memory = "512Mi" }
+        # CPU must stay allocated: the SSE consumer runs in a background thread with no
+        # incoming requests, so request-based throttling would stall it.
+        cpu_idle          = false
+        startup_cpu_boost = true
       }
     }
   }
