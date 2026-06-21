@@ -1,0 +1,29 @@
+[project]
+name = "pulsestream-adapter"
+version = "0.1.0"
+description = "PulseStream adapter: Wikimedia SSE -> Pub/Sub"
+requires-python = ">=3.12"
+dependencies = [
+    "google-cloud-pubsub>=2.23.0",
+    "requests>=2.32.0",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.3.0",
+    "ruff>=0.7.0",
+]
+
+[tool.ruff]
+line-length = 120
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "W"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-v --tb=short"
+
+[tool.setuptools.packages.find]
+include = ["adapter*"]
